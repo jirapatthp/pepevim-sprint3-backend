@@ -64,7 +64,7 @@ export const getUsers = async (req, res) => {
     }
 
     const users = await User.find();
-    res.status(200).json({ users, countusers: users.length });
+    res.status(200).json({ users, count_users: users.length });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Server Get Users error📕🍄" });
