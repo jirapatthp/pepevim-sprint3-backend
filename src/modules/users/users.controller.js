@@ -50,3 +50,23 @@ export const createUser = async (req, res) => {
     res.status(500).json({ message: "Server Register error📕🍄" });
   }
 };
+
+export const getUsers = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const checkUser = await User.findById(userId);
+    const roleUser = checkUser.role;
+
+    if (roleUser !== "admin") {
+      return res
+        .status(403)
+        .json({ message: "Forbidden. Admin access required." });
+    }
+
+    const users = await User.find();
+    res.status(200).json({ users, count_users: users.length });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server Get Users error📕🍄" });
+  }
+};

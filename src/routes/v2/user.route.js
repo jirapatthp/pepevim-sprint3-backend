@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { createUser } from "../../modules/users/users.contoller.js";
+import { createUser, getUsers } from "../../modules/users/users.controller.js";
+import { authenticate } from "../../middlewares/middleware.js";
 
 export const router = Router();
 
-router.get("/", (req, res) => {
-  res.status(200).json({ message: "hello eiei" });
-});
+//  ** GET USERS **
+router.get("/", authenticate, getUsers);
 
 //  ** SIGNUP **
 router.post("/", createUser);
