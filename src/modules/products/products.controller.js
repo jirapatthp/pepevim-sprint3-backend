@@ -16,7 +16,19 @@ export const getProducts = async (req, res) => {
 
 export const getProduct = async (req, res) => {};
 
-export const getProductDetail = async (req, res) => {};
+export const getProductDetail = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.findById(id);
+    return res.status(200).json({
+      success: true,
+      data: product,
+    });
+  } catch (error) {
+    error.name = error.name || "DatabaseError";
+    error.status = 500;
+  }
+};
 
 export const createProduct = async (req, res) => {
   try {
