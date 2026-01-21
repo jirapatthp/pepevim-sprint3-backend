@@ -2,8 +2,13 @@ import { Resend } from "resend";
 import { env } from "../utils/env.js";
 
 const resend = new Resend(env.RESEND_API_KEY);
-export const sendPasswordResetEmail = async (resetToken, email, userName) => {
+
+/**
+ * ส่ง email reset password
+ */
+export const sendPasswordResetEmail = async (email, resetToken, userName) => {
   const resetUrl = `${env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+
   try {
     const { data, error } = await resend.emails.send({
       from: "VELVE <onboarding@resend.dev>",
@@ -11,6 +16,7 @@ export const sendPasswordResetEmail = async (resetToken, email, userName) => {
       subject: "Reset Your Password - VELVE",
       html: getPasswordResetEmailTemplate(userName, resetUrl),
     });
+
     if (error) {
       console.error("❌ Resend error:", error);
       throw new Error("Failed to send email");
@@ -19,7 +25,7 @@ export const sendPasswordResetEmail = async (resetToken, email, userName) => {
     console.log("✅ Email sent successfully:", data.id);
     return { success: true, messageId: data.id };
   } catch (error) {
-    console.log("🍓email sending failed : ", error);
+    console.error("❌ Email sending failed:", error);
     throw error;
   }
 };
@@ -81,10 +87,10 @@ const getPasswordResetEmailTemplate = (userName, resetUrl) => {
         }
       </style>
     </head>
- <body>
+    <body>
       <div class="container">
         <div class="header">
-          <h1>VELVE</h1>
+          <h1>VELVÉ</h1>
         </div>
         <div class="content">
           <h2>Reset Your Password</h2>

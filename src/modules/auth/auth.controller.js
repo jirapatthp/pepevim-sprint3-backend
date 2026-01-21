@@ -51,6 +51,9 @@ export const logout = async (req, res) => {
   return res.status(200).json({ message: "Logout success" });
 };
 
+/**
+ * ✅ FORGOT PASSWORD - ขอ reset password
+ */
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -112,6 +115,9 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
+/**
+ * ✅ RESET PASSWORD - ตั้ง password ใหม่
+ */
 export const resetPassword = async (req, res) => {
   const { token, newPassword } = req.body;
 
@@ -168,6 +174,9 @@ export const resetPassword = async (req, res) => {
   }
 };
 
+/**
+ * ✅ VERIFY TOKEN - ตรวจสอบว่า token ยังใช้ได้หรือไม่ (optional)
+ */
 export const verifyResetToken = async (req, res) => {
   const { token } = req.params;
 
