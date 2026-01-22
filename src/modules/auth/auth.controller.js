@@ -119,13 +119,21 @@ export const forgotPassword = async (req, res) => {
  * ✅ RESET PASSWORD - ตั้ง password ใหม่
  */
 export const resetPassword = async (req, res) => {
-  const { token, newPassword } = req.body;
+  const { token, newPassword, confirmPassword } = req.body;
 
   try {
     // Validate
-    if (!token || !newPassword) {
+    if (!token || !newPassword || !confirmPassword) {
+      // ✅ ตรวจสอบ confirmPassword
       return res.status(400).json({
-        error: "Token and new password are required",
+        error: "Token, new password, and confirm password are required",
+      });
+    }
+
+    // ✅ ตรวจสอบว่า password ตรงกันหรือไม่
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        error: "Passwords do not match",
       });
     }
 
